@@ -1,5 +1,7 @@
 package shop;
 
-public class DataInput {
+import java.util.Scanner;
 
+public class DataInput {
+	public static Scanner sc = new Scanner(System.in);
 }
