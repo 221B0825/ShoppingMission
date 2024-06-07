@@ -23,7 +23,7 @@ public class ShoppingMall {
 		System.out.println("Home");
 		System.out.print("1. 로그인 2. 회원가입  >> ");
 	}
-	public void showLogin() {
+	public String showLogin() {
 		System.out.println("로그인 화면");
 		System.out.print("email :  ");
 		String email = DataInput.sc.nextLine();
@@ -32,6 +32,7 @@ public class ShoppingMall {
 		
 		// 로그인 로직
 		// 예외 처리
+		return null; // 이메일 리턴
 	}
 	public void showJoin() {
 		System.out.println("회원가입 화면");
@@ -42,9 +43,11 @@ public class ShoppingMall {
 		System.out.print("nickname :  ");
 		String nickname = DataInput.sc.nextLine();
 
+	}
+	public void showCustomerMain() {
 		
 	}
-	public void showMain() {
+	public void showAdminMain() {
 		
 	}
 	public List<Item> showItemList() {
