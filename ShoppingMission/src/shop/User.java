@@ -1,7 +1,5 @@
 package shop;
 
-import java.util.List;
-
 public class User {
 
 	public enum Role {
@@ -24,20 +22,19 @@ public class User {
 	private String email;
 	private String password;
 	private String name;
-	private List<Order> orders;
+	
 	private Role role;
 
 	public User() {
 
 	}
 
-	public User(long id, String email, String password, String name, List<Order> orders, Role role) {
+	public User(long id, String email, String password, String name, Role role) {
 		super();
 		this.id = id;
 		this.email = email;
 		this.password = password;
 		this.name = name;
-		this.orders = orders;
 		this.role = role;
 	}
 
@@ -71,14 +68,6 @@ public class User {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public List<Order> getOrders() {
-		return orders;
-	}
-
-	public void setOrders(List<Order> orders) {
-		this.orders = orders;
 	}
 
 	public Role getRole() {
