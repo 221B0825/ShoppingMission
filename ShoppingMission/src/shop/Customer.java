@@ -11,8 +11,8 @@ public class Customer extends User {
 		super();
 	}
 
-	public Customer(String email, String password, String name, Role role) {
-		super(email, password, name, role);
+	public Customer(String email, String password, String name) {
+		super(email, password, name);
 		this.orders = new ArrayList<Order>();
 	}
 

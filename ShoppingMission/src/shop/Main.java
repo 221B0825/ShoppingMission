@@ -2,7 +2,7 @@ package shop;
 
 import java.util.HashMap;
 
-import shop.User.Role;
+
 
 public class Main {
 
@@ -31,10 +31,7 @@ public class Main {
 				}
 				else { // 로그인 성공
 					System.out.println(loginUser.getNickname() + "님 환영합니다!");
-					if(loginUser.getRole() == Role.ADMIN)
-					{
-						
-					}
+					// 역할별 분기 처리
 				}
 				break;
 			case 2:

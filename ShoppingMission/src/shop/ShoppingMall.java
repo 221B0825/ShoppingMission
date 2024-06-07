@@ -1,12 +1,11 @@
 package shop;
 
-import static shop.User.Role.CUSTOMER;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import shop.User.Role;
+
 
 public class ShoppingMall {
 	private String name;
@@ -54,7 +53,7 @@ public class ShoppingMall {
 
 		
 		// 중복에 걸리지 않았다면 회원가입 성공
-		users.add(new User(email, joinData.get("password"), nickname, Role.CUSTOMER));
+		users.add(new User(email, joinData.get("password"), nickname));
 		return true;
 	}
 
