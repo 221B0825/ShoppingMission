@@ -18,10 +18,10 @@ public class User {
 
 	}
 
-	private long id;
+	// id처리가 애매해서 일단 빼놓겠습니다. 혹시 추가하실거면 하셔도 됩니다!
 	private String email;
 	private String password;
-	private String name;
+	private String nickname;
 	
 	private Role role;
 
@@ -29,22 +29,15 @@ public class User {
 
 	}
 
-	public User(long id, String email, String password, String name, Role role) {
+	public User( String email, String password, String nickname, Role role) {
 		super();
-		this.id = id;
 		this.email = email;
 		this.password = password;
-		this.name = name;
+		this.nickname = nickname;
 		this.role = role;
 	}
 
-	public long getId() {
-		return id;
-	}
 
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	public String getEmail() {
 		return email;
@@ -62,12 +55,13 @@ public class User {
 		this.password = password;
 	}
 
-	public String getName() {
-		return name;
+
+	public String getNickname() {
+		return nickname;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 
 	public Role getRole() {
