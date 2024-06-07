@@ -82,20 +82,35 @@ public class Main {
 			int customerMenu = Integer.parseInt(DataInput.sc.nextLine());
 			switch (customerMenu) {
 			case 1:
-				inputItemData();
-				shoppingMall.addItem();
+				shoppingMall.addItem(inputAddItemData());
 				break;
 			case 2:
+				Item updateItem = shoppingMall.findItemById(inputUpdateItemId());
+				if(updateItem == null) {
+					System.out.println("존재하지 않는 데이터입니다.");
+					break;
+				}
+				shoppingMall.updateItem(updateItem, inputUpdateItemData());
 				break;
 			case 3:
+				Item deleteItem = shoppingMall.findItemById(inputDeleteItemId());
+				if(deleteItem == null) {
+					System.out.println("존재하지 않는 데이터입니다.");
+					break;
+				}
+				shoppingMall.deleteItem(deleteItem);
 				break;
 			case 4:
+				shoppingMall.addCategory(inputAddCategoryData());
 				break;
 			case 5:
+				shoppingMall.deleteCategory(inputDeleteCategoryData());
 				break;
 			case 6:
+				shoppingMall.showItemList();
 				break;
 			case 7:
+				shoppingMall.showItemListByCategory(inputCategoryName());
 				break;
 			case 8:
 				break;
@@ -105,17 +120,63 @@ public class Main {
 		}
 	}
 
-	private static void inputItemData() {
+	private static String inputCategoryName() {
+		System.out.println("=================카테고리 별 상품 목록 화면=================");
+		System.out.print("카테고리 명을 입력해주세요 : ");
+		return DataInput.sc.nextLine();
+	}
+
+	private static int inputDeleteItemId() {
+		System.out.println("=================상품 삭제 화면=================");
+		System.out.print("삭제할 데이터의 ID를 입력해주세요 : ");
+		return Integer.parseInt(DataInput.sc.nextLine());
+	}
+
+	private static int inputUpdateItemId() {
+		System.out.println("=================상품 수정 화면=================");
+		System.out.print("수정할 데이터의 ID를 입력해주세요 : ");
+		return Integer.parseInt(DataInput.sc.nextLine());
+	}
+
+
+	private static String inputDeleteCategoryData() {
+		System.out.println("=================카테고리 삭제 화면=================");
+		System.out.print("삭제할 카테고리 명을 입력하세요 : ");
+		return DataInput.sc.nextLine();
+	}
+
+	private static String inputAddCategoryData() {
+		System.out.println("=================카테고리 추가 화면=================");
+		System.out.print("추가할 카테고리 명을 입력하세요 : ");
+		return DataInput.sc.nextLine();
+	}
+
+	private static HashMap<String, String> inputAddItemData() {
+		HashMap<String, String> addItemData = new HashMap<>();
 		System.out.println("=================상품 추가 화면=================");
 		System.out.print("title : ");
-		String title = DataInput.sc.nextLine();
+		addItemData.put("title", DataInput.sc.nextLine());
 		System.out.print("content :  ");
-		String content  = DataInput.sc.nextLine();
+		addItemData.put("content", DataInput.sc.nextLine());
 		System.out.print("price : ");
-		int price = Integer.parseInt(DataInput.sc.nextLine());
-		
-		new Item(title, content, price, Category.Food);
+		addItemData.put("price", DataInput.sc.nextLine());
+		System.out.print("category : ");
+		addItemData.put("category", DataInput.sc.nextLine());
 
+		return addItemData;
+	}
+	private static HashMap<String, String> inputUpdateItemData() {
+		HashMap<String, String> updateItemData = new HashMap<>();
+		System.out.print("title : ");
+		updateItemData.put("title", DataInput.sc.nextLine());
+		System.out.print("content :  ");
+		updateItemData.put("content", DataInput.sc.nextLine());
+		System.out.print("price : ");
+		updateItemData.put("price", DataInput.sc.nextLine());
+		System.out.print("category : ");
+		updateItemData.put("category", DataInput.sc.nextLine());
+
+		return updateItemData;
 	}
 
 	private static HashMap<String, String> inputJoinData() {

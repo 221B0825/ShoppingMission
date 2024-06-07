@@ -54,4 +54,11 @@ public class Item {
 		this.price = price;
 	}
 
+	@Override
+	public String toString() {
+		return "상품명 : " + title + " \n"
+				+ "글 내용 : " + content + " \n"
+				+ "가격 : " + price + " \n"
+				+ "카테고리 : " + category + "\n";
+	}
 }
