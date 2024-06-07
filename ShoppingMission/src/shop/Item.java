@@ -2,28 +2,32 @@ package shop;
 
 public class Item {
 
-	private long id;
-	private Category category;
+	private String title;
 	private String content;
+	private Category category;
 	private int price;
 	
 	public Item() {
 		
 	}
 
-	public Item(long id, Category category, String content, int price) {
-		this.id = id;
-		this.category = category;
+	public Item(String title, String content, int price, Category category) {
+		super();
+		this.title = title;
 		this.content = content;
+		this.category = category;
 		this.price = price;
 	}
 
-	public long getId() {
-		return id;
+
+
+
+	public String getTitle() {
+		return title;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public Category getCategory() {

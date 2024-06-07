@@ -1,6 +1,6 @@
 package shop;
 
-public class User {
+public abstract class User {
 
 	/**
 	 * Enum제거

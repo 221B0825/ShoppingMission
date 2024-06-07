@@ -15,7 +15,11 @@ public class Customer extends User {
 		super(email, password, name);
 		this.orders = new ArrayList<Order>();
 	}
-
+	public void addOrder(Order order) {
+		this.orders.add(order);
+	}
+	
+	
 	public List<Order> getOrders() {
 		return orders;
 	}

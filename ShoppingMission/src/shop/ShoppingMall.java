@@ -19,6 +19,7 @@ public class ShoppingMall {
 		this.name = name;
 		this.users = new ArrayList<>();
 		this.items = new ArrayList<>();
+		users.add(new Admin("admin", "1234", "주인장", "고객관리팀"));
 	}
 
 	public User login(HashMap<String, String> loginData) {
@@ -53,7 +54,7 @@ public class ShoppingMall {
 
 		
 		// 중복에 걸리지 않았다면 회원가입 성공
-		users.add(new User(email, joinData.get("password"), nickname));
+		users.add(new Customer(email, joinData.get("password"), nickname));
 		return true;
 	}
 
