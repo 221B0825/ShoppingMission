@@ -2,7 +2,7 @@ package shop;
 
 import java.util.List;
 
-public class Customer {
+public class User {
 
 	public enum Role {
 
@@ -27,11 +27,11 @@ public class Customer {
 	private List<Order> orders;
 	private Role role;
 
-	public Customer() {
+	public User() {
 
 	}
 
-	public Customer(long id, String email, String password, String name, List<Order> orders, Role role) {
+	public User(long id, String email, String password, String name, List<Order> orders, Role role) {
 		super();
 		this.id = id;
 		this.email = email;

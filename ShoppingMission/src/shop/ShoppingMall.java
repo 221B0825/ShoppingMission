@@ -5,14 +5,14 @@ import java.util.List;
 
 public class ShoppingMall {
 	private String name;
-	private List<Customer> customers;
+	private List<User> users;
 	private List<Item> items;
 	
 	public ShoppingMall() {};
 	
 	public ShoppingMall(String name) {
 		this.name = name;
-		this.customers = new ArrayList<>();
+		this.users = new ArrayList<>();
 		this.items = new ArrayList<>();
 	}
 	

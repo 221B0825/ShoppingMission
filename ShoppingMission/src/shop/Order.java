@@ -5,7 +5,7 @@ import java.util.List;
 public class Order {
 
 	private long id;
-	private Customer customer;
+	private User customer;
 	private List<Item> items;
 	private int totalPrice;
 
@@ -13,7 +13,7 @@ public class Order {
 
 	}
 
-	public Order(long id, Customer customer, List<Item> items, int totalPrice) {
+	public Order(long id, User customer, List<Item> items, int totalPrice) {
 		super();
 		this.id = id;
 		this.customer = customer;
@@ -29,11 +29,11 @@ public class Order {
 		this.id = id;
 	}
 
-	public Customer getCustomer() {
+	public User getCustomer() {
 		return customer;
 	}
 
-	public void setCustomer(Customer customer) {
+	public void setCustomer(User customer) {
 		this.customer = customer;
 	}
 
