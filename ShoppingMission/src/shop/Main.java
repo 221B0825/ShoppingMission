@@ -6,6 +6,8 @@ public class Main {
 
 		ShoppingMall shoppingMall = new ShoppingMall();
 
+		User user = new User();
+		user.setEmail("Test");
 	}
 
 }
