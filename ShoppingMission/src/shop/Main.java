@@ -1,6 +1,8 @@
 package shop;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Main {
 
@@ -53,10 +55,12 @@ public class Main {
 	private static void handleCustomerMenu(Customer customer, ShoppingMall shoppingMall) {
 		while (true) {
 			System.out.println("=================고객 메뉴=================");
-			System.out.print("1.주문 2.주문 변경 3.주문 취소 4.나의 주문 목록 5.상품 목록 보기 6.카테고리별 목록 7.로그아웃");
+			System.out.println("1.주문 2.주문 변경 3.주문 취소 4.나의 주문 목록 5.상품 목록 보기 6.카테고리별 목록 7.로그아웃");
+			System.out.print("메뉴 선택: ");
 			int customerMenu = Integer.parseInt(DataInput.sc.nextLine());
 			switch (customerMenu) {
 			case 1:
+				shoppingMall.addCustomerOrder(inputAddOrderItem(shoppingMall), customer);
 				break;
 			case 2:
 				break;
@@ -65,8 +69,10 @@ public class Main {
 			case 4:
 				break;
 			case 5:
+				shoppingMall.showItemList();
 				break;
 			case 6:
+				shoppingMall.showItemListByCategory(inputCategoryName());
 				break;
 			case 7:
 				return;
@@ -75,10 +81,36 @@ public class Main {
 
 	}
 
+	private static List<Item> inputAddOrderItem(ShoppingMall shoppingMall) {
+		List<Item> orderItems = new ArrayList<Item>();
+		System.out.println("=================물품 주문=================");
+		while (true) {
+			System.out.println("*주문 종료를 원하시면 X를 입력해 주십시오.");
+			System.out.print("주문하려는 물품 이름: ");
+			String itemTitle = DataInput.sc.nextLine();
+			if (itemTitle.equalsIgnoreCase("x")) {
+				break;
+			}
+
+			Item item = shoppingMall.isExistItem(itemTitle);
+			
+			if (item == null) {
+				System.out.println("존재하지 않는 물품입니다.");
+				continue;
+			} else {
+				orderItems.add(item);
+			}
+		}
+
+		// orderItems에 아무것도 안담겨있으면 addCustomerOrder 내부에서 처리
+		return orderItems;
+	}
+
 	private static void handleAdminMenu(Admin admin, ShoppingMall shoppingMall) {
 		while (true) {
 			System.out.println("=================관리자 메뉴=================");
 			System.out.println("1.상품 등록 2.상품 변경 3.상품 삭제 4.카테고리 등록 5.카테고리 삭제 6.상품 목록 보기 7.카테고리 별 목록 8.전체 주문 목록 9.로그아웃");
+			System.out.print("메뉴 선택: ");
 			int customerMenu = Integer.parseInt(DataInput.sc.nextLine());
 			switch (customerMenu) {
 			case 1:
@@ -86,7 +118,7 @@ public class Main {
 				break;
 			case 2:
 				Item updateItem = shoppingMall.findItemById(inputUpdateItemId());
-				if(updateItem == null) {
+				if (updateItem == null) {
 					System.out.println("존재하지 않는 데이터입니다.");
 					break;
 				}
@@ -94,7 +126,7 @@ public class Main {
 				break;
 			case 3:
 				Item deleteItem = shoppingMall.findItemById(inputDeleteItemId());
-				if(deleteItem == null) {
+				if (deleteItem == null) {
 					System.out.println("존재하지 않는 데이터입니다.");
 					break;
 				}
@@ -138,7 +170,6 @@ public class Main {
 		return Integer.parseInt(DataInput.sc.nextLine());
 	}
 
-
 	private static String inputDeleteCategoryData() {
 		System.out.println("=================카테고리 삭제 화면=================");
 		System.out.print("삭제할 카테고리 명을 입력하세요 : ");
@@ -156,7 +187,7 @@ public class Main {
 		System.out.println("=================상품 추가 화면=================");
 		System.out.print("title : ");
 		addItemData.put("title", DataInput.sc.nextLine());
-		System.out.print("content :  ");
+		System.out.print("content : ");
 		addItemData.put("content", DataInput.sc.nextLine());
 		System.out.print("price : ");
 		addItemData.put("price", DataInput.sc.nextLine());
@@ -165,11 +196,12 @@ public class Main {
 
 		return addItemData;
 	}
+
 	private static HashMap<String, String> inputUpdateItemData() {
 		HashMap<String, String> updateItemData = new HashMap<>();
 		System.out.print("title : ");
 		updateItemData.put("title", DataInput.sc.nextLine());
-		System.out.print("content :  ");
+		System.out.print("content : ");
 		updateItemData.put("content", DataInput.sc.nextLine());
 		System.out.print("price : ");
 		updateItemData.put("price", DataInput.sc.nextLine());
@@ -196,8 +228,8 @@ public class Main {
 				System.out.print("nickname : ");
 				nickname = DataInput.sc.nextLine();
 
-				// 검증로직 작성
-				if (email.equals("aa"))
+				// 이메일 형식 검증
+				if (!email.matches("^[_0-9a-zA-Z-]+@[0-9a-zA-Z-]+(.[_0-9a-zA-Z]+)*$"))
 					throw new Exception();
 
 				isJoinFail = false; // 입력 실패 후 재입력 시 값 초기화 방지
@@ -233,8 +265,8 @@ public class Main {
 				System.out.print("password :  ");
 				password = DataInput.sc.nextLine();
 
-				// 검증로직 작성
-				if (email.equals("aa"))
+				// 이메일 형식 검증
+				if (!email.equals("admin") && !email.matches("^[_0-9a-zA-Z-]+@[0-9a-zA-Z-]+(.[_0-9a-zA-Z]+)*$"))
 					throw new Exception();
 
 				isLoginFail = false;
