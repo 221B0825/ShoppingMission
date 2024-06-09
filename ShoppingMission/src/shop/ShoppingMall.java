@@ -142,7 +142,7 @@ public class ShoppingMall {
 	public void showItemList() {
 		System.out.println("상품 목록");
 		for (int i = 0; i < items.size(); i++) {
-			System.out.println(i + "번 째 상품");
+			System.out.println(i + 1 + "번 째 상품");
 			System.out.println(items.get(i).toString());
 		}
 	}
@@ -157,7 +157,7 @@ public class ShoppingMall {
 		List<Item> itemsByCategory = category.getItems();
 		System.out.println("상품 목록");
 		for (int i = 0; i < itemsByCategory.size(); i++) {
-			System.out.println(i + "번 째 상품");
+			System.out.println(i + 1 + "번 째 상품");
 			System.out.println(itemsByCategory.get(i).toString());
 		}
 	}
