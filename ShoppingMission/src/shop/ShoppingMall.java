@@ -237,7 +237,16 @@ public class ShoppingMall {
 	public void updateCustomerOrder(Order inputUpdateOrderData, Customer customer) {
 		
 	}
-
+	public void showOrderList() {
+		for(Order order : orders) {
+			System.out.println(order.getId());
+			System.out.println(order.getTotalPrice());
+			for(Item item : order.getItems()) {
+				System.out.println(item.toString());
+			}
+			System.out.println();
+		}
+	}
 	public void showOrderList(Customer customer) {
 		List<Order> customerOrder = new ArrayList<>();
 		for(Order order : orders) {

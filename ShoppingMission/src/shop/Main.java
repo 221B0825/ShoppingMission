@@ -169,6 +169,7 @@ public class Main {
 				shoppingMall.showItemListByCategory(inputCategoryName());
 				break;
 			case 8:
+				shoppingMall.showOrderList();
 				break;
 			case 9:
 				return;
