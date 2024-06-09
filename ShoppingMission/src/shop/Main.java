@@ -198,7 +198,7 @@ public class Main {
 				shoppingMall.addItem(inputAddItemData());
 				break;
 			case 2:
-				Item updateItem = shoppingMall.findItemById(inputUpdateItemId());
+				Item updateItem = shoppingMall.findItemById(inputUpdateItemId() - 1);
 				if (updateItem == null) {
 					System.out.println("존재하지 않는 데이터입니다.");
 					break;
@@ -206,7 +206,7 @@ public class Main {
 				shoppingMall.updateItem(updateItem, inputUpdateItemData());
 				break;
 			case 3:
-				Item deleteItem = shoppingMall.findItemById(inputDeleteItemId());
+				Item deleteItem = shoppingMall.findItemById(inputDeleteItemId() - 1);
 				if (deleteItem == null) {
 					System.out.println("존재하지 않는 데이터입니다.");
 					break;
@@ -226,6 +226,7 @@ public class Main {
 				shoppingMall.showItemListByCategory(inputCategoryName());
 				break;
 			case 8:
+				shoppingMall.showOrderList();
 				break;
 			case 9:
 				return;

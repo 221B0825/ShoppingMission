@@ -141,7 +141,7 @@ public class ShoppingMall {
 	public void showItemList() {
 		System.out.println("상품 목록");
 		for (int i = 0; i < items.size(); i++) {
-			System.out.println(i + "번 째 상품");
+			System.out.println(i + 1 + "번 째 상품");
 			System.out.println(items.get(i).toString());
 		}
 	}
@@ -156,7 +156,7 @@ public class ShoppingMall {
 		List<Item> itemsByCategory = category.getItems();
 		System.out.println("상품 목록");
 		for (int i = 0; i < itemsByCategory.size(); i++) {
-			System.out.println(i + "번 째 상품");
+			System.out.println(i + 1 + "번 째 상품");
 			System.out.println(itemsByCategory.get(i).toString());
 		}
 	}
@@ -247,7 +247,16 @@ public class ShoppingMall {
 		System.out.println("주문 변경이 완료되었습니다.");
 
 	}
-
+	public void showOrderList() {
+		for(Order order : orders) {
+			System.out.println(order.getId());
+			System.out.println(order.getTotalPrice());
+			for(Item item : order.getItems()) {
+				System.out.println(item.toString());
+			}
+			System.out.println();
+		}
+	}
 	public void showOrderList(Customer customer) {
 		List<Order> customerOrder = new ArrayList<>();
 		for (Order order : orders) {
