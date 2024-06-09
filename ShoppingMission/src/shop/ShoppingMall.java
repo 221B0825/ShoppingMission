@@ -25,7 +25,7 @@ public class ShoppingMall {
 
 		// default data init
 		users.add(new Admin("admin", "1234", "주인장", "고객관리팀"));
-		users.add(new Customer("1234@gmail.com", "1234", "aa"));
+		users.add(new Customer("user1@gmail.com", "1234", "user1"));
 
 		// ------------------
 		categories.add(new Category("Food")); // 0
@@ -35,29 +35,29 @@ public class ShoppingMall {
 		categories.add(new Category("Pets")); // 4
 		// ------------------
 		items.add(new Item("유기농흙당근", "신선 유기농으로 키운 산지직송 당근", 5000, categories.get(0)));
-		items.add(new Item("산지직송사과", "청송 꿀 사과", 6000, categories.get(0)));
+//		items.add(new Item("산지직송사과", "청송 꿀 사과", 6000, categories.get(0)));
 		categories.get(0).addItem(items.get(0));
-		categories.get(0).addItem(items.get(1));
+//		categories.get(0).addItem(items.get(1));
 
 		items.add(new Item("무지반팔티", "통기성 좋은 여름용 반팔티", 9900, categories.get(1)));
-		items.add(new Item("버뮤다팬츠", "무릎을 가리는 시원한 반바지", 9000, categories.get(1)));
-		categories.get(1).addItem(items.get(2));
-		categories.get(1).addItem(items.get(3));
+//		items.add(new Item("버뮤다팬츠", "무릎을 가리는 시원한 반바지", 9000, categories.get(1)));
+		categories.get(1).addItem(items.get(1));
+//		categories.get(1).addItem(items.get(3));
 
 		items.add(new Item("강력썬크림", "피부 건강을 위한 자외선 차단제", 12900, categories.get(2)));
-		items.add(new Item("모공탄력팩", "지친 하루 피부에도 휴식을 주기위한 팩", 7000, categories.get(2)));
-		categories.get(2).addItem(items.get(4));
-		categories.get(2).addItem(items.get(5));
+//		items.add(new Item("모공탄력팩", "지친 하루 피부에도 휴식을 주기위한 팩", 7000, categories.get(2)));
+		categories.get(2).addItem(items.get(2));
+//		categories.get(2).addItem(items.get(5));
 
 		items.add(new Item("배구공", "5호 크기 공인구", 24800, categories.get(3)));
 		items.add(new Item("셔틀콕", "기본 5개입", 12000, categories.get(3)));
-		categories.get(3).addItem(items.get(6));
-		categories.get(3).addItem(items.get(7));
+		categories.get(3).addItem(items.get(3));
+		categories.get(3).addItem(items.get(4));
 
-		items.add(new Item("튼튼건강사료", "충분한 영양 공급을 위한 사료", 40000, categories.get(4)));
+//		items.add(new Item("튼튼건강사료", "충분한 영양 공급을 위한 사료", 40000, categories.get(4)));
 		items.add(new Item("캣타워", "고양이들의 놀이터", 55000, categories.get(4)));
-		categories.get(4).addItem(items.get(8));
-		categories.get(4).addItem(items.get(9));
+		categories.get(4).addItem(items.get(5));
+//		categories.get(4).addItem(items.get(6));
 	}
 
 	public User login(HashMap<String, String> loginData) {
@@ -240,36 +240,47 @@ public class ShoppingMall {
 			totalPrice += item.getPrice();
 		}
 		updateOrder.setTotalPrice(totalPrice);
+		
 		// update Orders
-		updateOrder = this.orders.get((int) updateOrder.getId());
+		for(Order order : orders) {
+			if(order.getId() == updateOrder.getId()) {
+				order = updateOrder;
+				break;
+			}
+		}
 		// update customer-orders
-		updateOrder = customer.getOrders().get((int) updateOrder.getId());
+		for(Order order : customer.getOrders()) {
+			if(order.getId() == updateOrder.getId()) {
+				order = updateOrder;
+			}
+		}
 		System.out.println("주문 변경이 완료되었습니다.");
 
 	}
+
 	public void showOrderList() {
-		for(Order order : orders) {
+		for (Order order : orders) {
+			System.out.println(order.getCustomer().getNickname() + " 님의 주문목록");
 			System.out.println(order.getId());
 			System.out.println(order.getTotalPrice());
-			for(Item item : order.getItems()) {
+			for (Item item : order.getItems()) {
 				System.out.println(item.toString());
 			}
-			System.out.println();
+			System.out.println("-----------------------------------------");
 		}
 	}
+
 	public void showOrderList(Customer customer) {
 		List<Order> customerOrder = new ArrayList<>();
-		for (Order order : orders) {
-			if (order.getCustomer().equals(customer)) {
-				System.out.println("-----------------------------------------");
-				System.out.println("주문번호: " + (order.getId() + 1));
-				System.out.println("총 금액: " + order.getTotalPrice());
-				for (Item item : order.getItems()) {
-					System.out.println(item.toString());
-				}
-				System.out.println("-----------------------------------------");
-
+		for (Order order : customer.getOrders()) {
+			System.out.println("-----------------------------------------");
+			System.out.println("주문번호: " + (order.getId() + 1));
+			System.out.println("총 금액: " + order.getTotalPrice());
+			for (Item item : order.getItems()) {
+				System.out.println(item.toString());
 			}
+			System.out.println("-----------------------------------------");
+
 		}
 	}
 
@@ -290,11 +301,11 @@ public class ShoppingMall {
 				deleteOrder = order;
 			}
 		}
-		
-		//deleteOrder
-		if(deleteOrder == null) {
+
+		// deleteOrder
+		if (deleteOrder == null) {
 			System.out.println("잘못된 주문번호 입니다.");
-		}else {
+		} else {
 			this.orders.remove(deleteOrder);
 			customer.getOrders().remove(deleteOrder);
 			System.out.println("주문 삭제 완료");
