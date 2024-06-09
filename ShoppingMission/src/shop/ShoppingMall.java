@@ -11,7 +11,6 @@ public class ShoppingMall {
 	private List<Category> categories;
 	private List<Order> orders;
 
-	// orderNum 처리 어떻게 할 지 ...
 	private long orderNum = 0;
 
 	public ShoppingMall() {
@@ -44,7 +43,7 @@ public class ShoppingMall {
 		items.add(new Item("버뮤다팬츠", "무릎을 가리는 시원한 반바지", 9000, categories.get(1)));
 		categories.get(1).addItem(items.get(2));
 		categories.get(1).addItem(items.get(3));
-		
+
 		items.add(new Item("강력썬크림", "피부 건강을 위한 자외선 차단제", 12900, categories.get(2)));
 		items.add(new Item("모공탄력팩", "지친 하루 피부에도 휴식을 주기위한 팩", 7000, categories.get(2)));
 		categories.get(2).addItem(items.get(4));
@@ -234,31 +233,63 @@ public class ShoppingMall {
 
 	}
 
-	public void updateCustomerOrder(Order inputUpdateOrderData, Customer customer) {
-		
+	public void updateCustomerOrder(Order updateOrder, Customer customer) {
+		// totalPrice 재정의
+		int totalPrice = 0;
+		for (Item item : updateOrder.getItems()) {
+			totalPrice += item.getPrice();
+		}
+		updateOrder.setTotalPrice(totalPrice);
+		// update Orders
+		updateOrder = this.orders.get((int) updateOrder.getId());
+		// update customer-orders
+		updateOrder = customer.getOrders().get((int) updateOrder.getId());
+		System.out.println("주문 변경이 완료되었습니다.");
+
 	}
 
 	public void showOrderList(Customer customer) {
 		List<Order> customerOrder = new ArrayList<>();
-		for(Order order : orders) {
-			if(order.getCustomer().equals(customer)) {
-				System.out.println(order.getId());
-				System.out.println(order.getTotalPrice());
-				for(Item item : order.getItems()) {
+		for (Order order : orders) {
+			if (order.getCustomer().equals(customer)) {
+				System.out.println("-----------------------------------------");
+				System.out.println("주문번호: " + (order.getId() + 1));
+				System.out.println("총 금액: " + order.getTotalPrice());
+				for (Item item : order.getItems()) {
 					System.out.println(item.toString());
 				}
-				System.out.println();
+				System.out.println("-----------------------------------------");
+
 			}
 		}
 	}
 
 	public Order getCustomerOrder(long orderId, Customer customer) {
-		
-		for(Order order : orders) {
-			if(order.getCustomer().equals(customer) && order.getId() == orderId) {
+
+		for (Order order : orders) {
+			if (order.getCustomer().equals(customer) && order.getId() == orderId) {
 				return order;
 			}
 		}
 		return null;
 	}
+
+	public void cancelCustomerOrder(long orderId, Customer customer) {
+		Order deleteOrder = null;
+		for (Order order : customer.getOrders()) {
+			if (order.getId() == orderId) {
+				deleteOrder = order;
+			}
+		}
+		
+		//deleteOrder
+		if(deleteOrder == null) {
+			System.out.println("잘못된 주문번호 입니다.");
+		}else {
+			this.orders.remove(deleteOrder);
+			customer.getOrders().remove(deleteOrder);
+			System.out.println("주문 삭제 완료");
+		}
+	}
+
 }

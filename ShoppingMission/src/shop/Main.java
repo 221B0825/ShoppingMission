@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Main {
-	
 
 	public static void main(String[] args) {
 
@@ -64,9 +63,10 @@ public class Main {
 				shoppingMall.addCustomerOrder(inputAddOrderItem(shoppingMall), customer);
 				break;
 			case 2:
-				shoppingMall.updateCustomerOrder(inputUpdateOrderData(shoppingMall, customer),customer);
+				shoppingMall.updateCustomerOrder(inputUpdateOrderData(shoppingMall, customer), customer);
 				break;
 			case 3:
+				shoppingMall.cancelCustomerOrder(inputCancelOrderData(shoppingMall, customer), customer);
 				break;
 			case 4:
 				shoppingMall.showOrderList(customer);
@@ -84,26 +84,83 @@ public class Main {
 
 	}
 
+	private static long inputCancelOrderData(ShoppingMall shoppingMall, Customer customer) {
+		System.out.println("=================주문 목록=================");
+		shoppingMall.showOrderList(customer);
+		System.out.print("삭제할 주문 번호: ");
+		long orderId = DataInput.sc.nextLong() - 1;
+		DataInput.sc.nextLine();
+		return orderId;
+	}
+
 	private static Order inputUpdateOrderData(ShoppingMall shoppingMall, Customer customer) {
 		System.out.println("=================주문 목록=================");
 		shoppingMall.showOrderList(customer);
-		System.out.print("변경하실 주문 번호 : ");
-		long orderId = DataInput.sc.nextLong();
+		System.out.print("변경할 주문 번호 : ");
+		// 실제 id 값은 0부터 시작
+		long orderId = DataInput.sc.nextLong() - 1;
 		// sc 한번 읽어줘야 다음 입력값 제대로 들어옴
 		DataInput.sc.nextLine();
 		Order order = shoppingMall.getCustomerOrder(orderId, customer);
-		if(order == null) {
+		if (order == null) {
 			System.out.println("잘못된 주문번호 입니다.");
 			return null;
-		}else {
+		} else {
 			System.out.println("=================주문 변경=================");
-			System.out.println("1. 물품 삭제 2. 물품 추가");
+			System.out.println("1. 물품 삭제 2. 물품 추가 주문");
 			String selected = DataInput.sc.nextLine();
-			// 새로운 물풂을 받거나 .삭제하거나.
+			switch (selected) {
+			case "1":
+				// 물품 삭제된 오더 리스트를 오더 번호와 함께 반환
+				order = inputDeleteOrderItem(shoppingMall, order);
+				
+				break;
+			case "2":
+				// 물품 주문과 동일한 로직 사용
+				List<Item> addOrderItems = inputAddOrderItem(shoppingMall);
+				// 새로 주문한 물품들 추가
+				for(Item item : addOrderItems) {
+					order.getItems().add(item);
+				}
+				break;
+
+			default:
+				break;
+			}
 			return order;
 		}
 	}
 
+	private static Order inputDeleteOrderItem(ShoppingMall shoppingMall, Order order) {
+		System.out.println("=================물품 삭제=================");
+		for(Item item : order.getItems()) {
+			System.out.println(item.toString());
+		}
+		while(true) {
+			System.out.println("*물품 삭제 종료를 원하시면 X를 입력해 주십시오.");
+			System.out.print("삭제하려는 물품 이름: ");
+			String itemTitle = DataInput.sc.nextLine();
+			
+			if(itemTitle.equalsIgnoreCase("x")) {
+				break;
+			}
+			
+			Item item = shoppingMall.isExistItem(itemTitle);
+			if(item == null) {
+				System.out.println("존재하지 않는 물품입니다.");
+				continue;
+			}
+
+			if(order.getItems().contains(item)) {
+				order.getItems().remove(item);
+				System.out.println(item.getTitle()+" 물품 삭제 완료");
+			}else {
+				System.out.println("주문 내역에 존재하지 않는 물품입니다.");
+			}
+		}
+		
+		return order;
+	}
 
 	private static List<Item> inputAddOrderItem(ShoppingMall shoppingMall) {
 		List<Item> orderItems = new ArrayList<Item>();
@@ -117,7 +174,7 @@ public class Main {
 			}
 
 			Item item = shoppingMall.isExistItem(itemTitle);
-			
+
 			if (item == null) {
 				System.out.println("존재하지 않는 물품입니다.");
 				continue;
