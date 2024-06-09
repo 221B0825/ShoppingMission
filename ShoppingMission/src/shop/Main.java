@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Main {
+	
 
 	public static void main(String[] args) {
 
@@ -63,10 +64,12 @@ public class Main {
 				shoppingMall.addCustomerOrder(inputAddOrderItem(shoppingMall), customer);
 				break;
 			case 2:
+				shoppingMall.updateCustomerOrder(inputUpdateOrderData(shoppingMall, customer),customer);
 				break;
 			case 3:
 				break;
 			case 4:
+				shoppingMall.showOrderList(customer);
 				break;
 			case 5:
 				shoppingMall.showItemList();
@@ -80,6 +83,27 @@ public class Main {
 		}
 
 	}
+
+	private static Order inputUpdateOrderData(ShoppingMall shoppingMall, Customer customer) {
+		System.out.println("=================주문 목록=================");
+		shoppingMall.showOrderList(customer);
+		System.out.print("변경하실 주문 번호 : ");
+		long orderId = DataInput.sc.nextLong();
+		// sc 한번 읽어줘야 다음 입력값 제대로 들어옴
+		DataInput.sc.nextLine();
+		Order order = shoppingMall.getCustomerOrder(orderId, customer);
+		if(order == null) {
+			System.out.println("잘못된 주문번호 입니다.");
+			return null;
+		}else {
+			System.out.println("=================주문 변경=================");
+			System.out.println("1. 물품 삭제 2. 물품 추가");
+			String selected = DataInput.sc.nextLine();
+			// 새로운 물풂을 받거나 .삭제하거나.
+			return order;
+		}
+	}
+
 
 	private static List<Item> inputAddOrderItem(ShoppingMall shoppingMall) {
 		List<Item> orderItems = new ArrayList<Item>();
